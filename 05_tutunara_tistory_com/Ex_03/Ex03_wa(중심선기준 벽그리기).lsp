@@ -1,0 +1,63 @@
+;;============================================================
+;  벽체그리기 (93 주말농부)
+;  ->중심선을 선택후 벽두께를 입력하면 현재 레이어에 벽체를
+;    그리는 명령어
+;  ->다중선택기능 추가(2007.5)
+;;------ wall draw -------------------------------------------
+(defun c:wa(/ os cl a d1 d2 d3 k ssn en ed p1 p2p3 p4 db0 ag)
+;->*error* start
+ (defun *error* (msg)(princ "error: ")(princ msg)
+ (setvar "osmode" os)
+ (princ))
+;-<*error* end
+   (setq os (getvar "osmode")  cl (getvar "clayer") )
+   (setvar "osmode" 0)
+   (prompt " 벽체그리기...")
+   (setq d1 200)
+   (if (= dwwa nil) (setq dwwa d1))
+   (setq a (strcat "\n벽체두께<" (rtos dwwa 2 0) "> : "))
+   (setq d2 (getdist a))
+   (if (= d2 nil) (setq d2 dwwa) (setq dwwa d2))
+   (setq d3 (/ d2 2.0))
+   (setq ss (ssget))
+   (setq k 0)
+   (setq ssn (sslength ss))
+   (repeat ssn
+      (setq en (ssname ss k))
+      (setq ed (entget en))
+      (setq p1 (cdr (assoc 10 ed)))
+      (setq db0 (cdr (assoc 0 ed)))
+      (cond
+         ( (= db0 "LINE")
+             (setq p2 (cdr (assoc 11 ed)))
+             (setq ag (angle p1 p2))
+             (setq p3 (polar p1 (+ ag (/ pi 2)) d2))
+             (setq p4 (polar p1 (- ag (/ pi 2)) d2))
+             (@wa_ch en d3 p3 p4)  )
+         ( (= db0 "LWPOLYLINE")
+             (setq p2 (cdr (assoc 10 (vl-remove (assoc 10 ed) ed))));두번째 db10
+             (setq ag (angle p1 p2))
+             (setq p3 (polar p1 (+ ag (/ pi 2)) d2))
+             (setq p4 (polar p1 (- ag (/ pi 2)) d2))
+             (@wa_ch en d3 p3 p4)  )
+         ( (= db0 "ARC")
+             (setq rd (cdr (assoc 40 ed)))
+             (setq ag (cdr (assoc 51 ed)))
+             (setq p3 (polar p1 ag  (+ rd d2)))
+             (setq p4 (polar p1 (+ ag pi) (- rd d2)))
+             (@wa_ch en d3 p3 p4)  )
+         ( (= db0 "CIRCLE")
+             (setq rd (cdr (assoc 40 ed)))
+             (setq p3 (polar p1 pi  (+ rd d2)))
+             (setq p4 p1)
+             (@wa_ch en d3 p3 p4)  )
+      );cond end
+      (setq k (+ k 1))
+   );reapeat end
+   (setvar "osmode" os)
+(prin1))
+;; sub routine (offset+change)
+(defun @wa_ch (en d3 p3 p4)
+   (command "offset" d3 en p3 "") (command "change" "l" "" "p" "la" cl "")
+   (command "offset" d3 en p4 "") (command "change" "l" "" "p" "la" cl "")
+)

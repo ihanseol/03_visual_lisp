@@ -1,0 +1,54 @@
+-------------m2-14.lsp
+-----리습 단축키-----.txt
+2005 express단축키.lsp
+AS(오스냅꺼질때).lsp
+B 투브레이크.lsp
+blp(블럭삽입점재정의).lsp
+BreakObjects(교차선끈는리습).lsp
+brn블럭이름재지정.lsp
+BTE(블럭텍스트수정).LSP
+cct(택스트박스넣기).lsp
+cl.lsp
+DL(n등분카피).LSP
+do(솔리드 뒤로보내기).lsp
+dset(A1 치수유형정의).lsp
+dseta3(A3 치수유형정의).lsp
+equ(문자내용 동일화).lsp
+FU FT 언프리즈 언락.lsp
+Hide-VIS-INVIS(객체숨기기보이기).lsp
+insul(단열재그리기).lsp
+jm.mnu
+join_(끊어진_선_연결).lsp
+laa(레이어자동색지정).lsp
+LAYER 생성.lsp
+LClose2.LSP
+list.txt
+LQ (모든레이어목록만들기).lsp
+LTS 레이어필터
+MCT(멀티크로스트림).lsp
+num.lsp
+pds_layer2(레이어 종합 관리)--------.lsp
+plw(음영이 들어간 구름마크만드기)------.lsp
+qa(빠른면적구하기).lsp
+qds(거리를 텍스트로 쓰기).lsp
+rev(구름마크).lsp
+revb(박스형 구름마크).lsp
+rsa(면적으로스케일조정).lsp
+sb(구조도창문개구부표시).lsp
+spl(스플을_폴리로).lsp
+SSS+LLL(대소문자전환).lsp
+TA(문자정열).lsp
+textTU2(단어의 앞글자만 대문자..나머지는 소문자로).lsp
+TITS(타이틀 간격맞추기).lsp
+TNA(도면목록표에 도면번호 한방에 쓰기).lsp
+ts(문자크기변경).lsp
+TT 원하는 문자로 바꾸기.LSP
+wa(중심선기준 벽그리기).lsp
+wc(벽 중심선 그리기).lsp
+WW(중복선제거).lsp
+XZ(xy스케일따로).lsp
+도면번호 기입DWGN.lsp
+사격형으로 면적구하기
+지시선(ql).lsp
+택스트 스타일 변경 리습
+필렛하기(박스선택필렛).lsp

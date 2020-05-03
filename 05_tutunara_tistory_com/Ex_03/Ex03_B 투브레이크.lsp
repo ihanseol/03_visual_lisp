@@ -1,0 +1,11 @@
+(defun C:B(/ ss sno pt1 pt2 no x)(princ " = BREAK2P") 
+(setq ss (ssget)) 
+(setq sno (sslength ss)) 
+(setq pt1 (getpoint "\n>>> Enter 1st Point : ")) 
+(setq pt2 (getpoint pt1 "\n>>> Enter 2nd Point : ")) 
+(setq no 0) 
+(repeat sno 
+(setq x (ssname ss no)) 
+(command "break" x pt1 pt2) 
+(setq no (1+ no)) 
+)(prin1))

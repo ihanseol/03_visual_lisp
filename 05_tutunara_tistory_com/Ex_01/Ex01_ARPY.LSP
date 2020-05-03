@@ -1,0 +1,26 @@
+;;ID : anold88
+;;NAME : KANG MIN SOO
+;;DATE : 1998/04/23
+
+(defun c:ar(/ d_s ent_p ar_1 ar_2 py_1 py_2 t_p n_p)
+  (graphscr)
+  (setvar "cmdecho" 0)
+  (setq d_s (getvar "dimscale"))
+  (command "units" "" "8" "" "" "" "")
+  (setq ent_p (entsel "\n 피라인을 선택하세요!! :"))
+  (command "area" "e" ent_p)
+  (setq ar_1 (/ (getvar "area" ) 1.0e+00))
+  (setq ar_2 (rtos ar_1 2 3))
+  (setq py_1 (* ar_1 0.3025))
+  (setq py_2 (rtos py_1 2 3))
+  (command "units" "" "6" "" "" "" "")
+  (prompt "\nArea (M2):")(princ ar_2)
+  (prompt "\nArea (Py):")(princ py_2)(princ)
+  (setq t_p (getpoint "\nText Point:"))
+  (setq t_h (getreal "\nText Hihg:"))
+  (setq n_p (list (car t_p) (- (cadr t_p) (* t_h 2))))
+  (command "text" t_p t_h "" (strcat "* M2 : " ar_2))
+  (command "text" n_p t_h "" (strcat "* PY : " py_2))
+  (setvar "cmdecho" 1)
+  (princ)
+)

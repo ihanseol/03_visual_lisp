@@ -1,0 +1,10 @@
+;osnap의 int, end, mid 옵션 자동 생성, 추가 옵션은 맨 밑에서 둘째줄에 추가하세요.
+(defun c:as() 
+(princ " = redraw ")
+(command "ortho" "on")
+(command "osnap" "int,end,mid,cen,per,ext,qua")
+)
+(defun c:xx() 
+(command "ortho" "off")
+(command "osnap" "off")
+)

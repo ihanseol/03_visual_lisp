@@ -1,0 +1,51 @@
+;============================================================
+;  단열재 그리기 (1996 주말농부)
+;  ->단열재을 자동으로 그리는 명령어.
+;  ->두점으로 그리기로 수정/자동 pline으로 묶기(2007.7.30)
+;------- insulation draw ------------------------------------
+(defun c:insul(/ os bl cl pt1 pt2 thk ag1 ag2 n ds1
+              b1 b2 b3 b4 p1 p2 p3 p4 p5 p6 p7 p8 ss)
+;->*error* start
+ (defun *error* (msg)(princ "error: ")(princ msg)
+ (setvar "osmode" os) (setvar "blipmode" bl)
+ (princ))
+;-<*error* end
+   (setq os (getvar "osmode") bl (getvar "blipmode"))
+   (if (= dwins nil) (setq dwins 50))
+   (setq thk (getreal (strcat "\n단열재 두께<"(rtos dwins 2 0)">:")))
+   (if (= thk nil) (setq thk dwins)) (setq dwins thk)
+   (setvar "blipmode" 0)
+   (setvar "osmode" 161);end,per,int
+   (setq pt1 (getpoint "\n그리기 시작점 선택->"))
+   (setq pt2 (getpoint pt1 "\n그리기 끝점 선택->"))
+   (setvar "blipmode" 0)(setvar "osmode" 0)
+   (setq sc (/ thk 50))
+   (setq ag1 (angle pt1 pt2) ag2 (+ ag1 (/ pi 2)))
+   (setq ds1 (distance pt1 pt2))
+   (setq n (/ ds1 (* sc 25)) )
+   (setq b1 (polar pt1 ag2 (* sc 4.32))
+         b2 (polar pt1 ag2 (* sc 13.55))
+         b3 (polar pt1 ag2 (* sc 36.45))
+         b4 (polar pt1 ag2 (* sc 50.00))) 
+   (setq p1 (polar b1 ag1 (* sc 8.23))
+         p2 (polar b2 ag1 (* sc 9.35))
+         p3 (polar b3 ag1 (* sc 3.15))
+         p4 (polar b4 ag1 (* sc 12.50))
+         p5 (polar b3 ag1 (* sc 21.85))
+         p6 (polar b2 ag1 (* sc 15.65))
+         p7 (polar b1 ag1 (* sc 16.77))
+         p8 (polar pt1 ag1 (* sc 25.00)))
+   (setq ss (ssadd))
+   (command "pline" pt1 "a" "s" p1  p2 "l" p3 "a" "s" p4
+                    p5 "l" p6 "a" "s" p7 p8 "")
+   (setq ss (ssadd (entlast) ss))
+   (while (>= n 1)
+     (setq pt1 p8) 
+     (setq p8 (polar pt1 ag1 (* sc 25.00)))
+     (command "copy" "l" "" pt1 p8)
+     (setq ss (ssadd (entlast) ss))
+     (setq n (- n 1))
+   );while end
+   (command "pedit" "l" "j" ss "" "" )
+   (setvar "osmode" os)(setvar "blipmode" bl)
+(prin1))
