@@ -1,5 +1,6 @@
-
-(defun c:ff()
+;2020-05-15
+;select previous
+(defun c:selp()
 	(sssetfirst nil (ssget "p"))
 )
 
